@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-
+#TODO find all locators
 class LoginPageLocators():
     FRAME_LOGIN = (By.CSS_SELECTOR, 'form[method="post"]')
     INPUT_EMAIL = (By.CSS_SELECTOR, 'input[type="email"]')

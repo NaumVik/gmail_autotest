@@ -12,7 +12,9 @@ import pytest
 #     page = LoginPage(browser, link)
 #     page.open()
 #     page.learn_more_button()
-
+#TODO language problem (include basic parametrs of test and test language dropbox
+#Todo dropbox problem
+#TODO add links to creat account setup fixture
 class TestActiveButtonsRightURL():
     @pytest.fixture(scope="function", autouse=True)
     def setup(self, browser):
