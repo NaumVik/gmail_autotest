@@ -1,6 +1,7 @@
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium import webdriver
+import time
 
 class BasePage():
     def __init__(self, browser, url, timeout=10):
@@ -33,6 +34,7 @@ class BasePage():
                 return True
         except:
             return False
+        return True
 
 
 

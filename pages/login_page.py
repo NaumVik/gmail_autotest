@@ -1,7 +1,7 @@
 from selenium import webdriver
 
 from .base_page import BasePage
-from .locators import LoginPageLocators
+from .locators import LoginPageLocators, KeyWordsForRightURL
 
 
 class LoginPage(BasePage):
@@ -17,20 +17,15 @@ class LoginPage(BasePage):
     def should_be_login_form(self):
         assert self.is_element_present(*LoginPageLocators.FRAME_LOGIN), "Login form is not presented"
 
-
     def learn_more_button(self):
         self.should_be_learn_more_button()
         self.should_be_learn_more_page()
 
-
     def should_be_learn_more_button(self):
-        assert self.is_element_present(*LoginPageLocators.BUTTON_LEARN_MORE), "learn more button is not present"
-
-
+        assert self.is_element_present(*LoginPageLocators.LEARN_MORE_BUTTON), "learn more button is not present"
 
     def should_be_learn_more_page(self):
-        assert self.go_to_right_page(*LoginPageLocators.BUTTON_LEARN_MORE, "answer"), "Not right page"
-
+        assert self.go_to_right_page(*LoginPageLocators.LEARN_MORE_BUTTON, KeyWordsForRightURL.LEARN_MORE_PAGE), "Not right page"
 
     # def should_be_register_form(self):
     #     # реализуйте проверку, что есть форма регистрации на странице
