@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 class LoginPageLocators():
     FRAME_LOGIN = (By.CSS_SELECTOR, 'form[method="post"]')
     INPUT_EMAIL = (By.CSS_SELECTOR, 'input[type="email"]')
+    MESSAGE_ELEMENT = (By.CSS_SELECTOR, 'div[class="o6cuMc"]')
     FORGOT_EMAIL_BUTTON = (By.XPATH, '//button[contains(text(), "Forgot email")]')
     LEARN_MORE_BUTTON = (By.XPATH, '//a[text()="Learn more"]')
     CREATE_ACCOUNT_BUTTON = (By.XPATH, '//span[text()="Create account"]')
@@ -18,4 +19,7 @@ class PasswordPageLocators():
 
 
 class KeyWordsForRightURL():
-    LEARN_MORE_PAGE = "answer"
+    LEARN_MORE_PAGE = "answer" #support.google.com/accounts/answer/2917834
+    HELP_PAGE = "support.google.com/accounts"
+    PRIVACY_PAGE = "privacy"
+    TERMS_PAGE = "terms"

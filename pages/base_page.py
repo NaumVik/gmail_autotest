@@ -24,17 +24,22 @@ class BasePage():
             return False
         return True
 
+    def enter_value_and_submit(self, how, what, value, how2, what2):
+        space = self.browser.find_element(how, what)
+        space.send_keys(value)
+        submit_button = self.browser.find_element(how2, what2)
+        submit_button.click()
+
 #TODO change place to setup in class of test
     def go_to_right_page(self, how, what, search_word):
-        try:
-            button = self.browser.find_element(how, what)
-            button.click()
-            actual_url = str(self.get_url_of_page())
-            if search_word in actual_url:
-                return True
-        except:
+        button = self.browser.find_element(how, what)
+        button.click()
+        print(self.get_url_of_page())
+        if search_word in self.get_url_of_page():
+            return True
+        else:
             return False
-        return True
+
 
 
 
