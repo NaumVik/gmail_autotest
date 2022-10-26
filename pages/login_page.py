@@ -6,7 +6,7 @@ from .locators import LoginPageLocators, KeyWordsForRightURL
 
 class LoginPage(BasePage):
     def should_be_login_form(self):
-        assert self.is_element_present(*LoginPageLocators.INPUT_EMAIL), "Space for enter login is not present"
+        assert self.is_element_present(*LoginPageLocators.INPUT_EMAIL), "Form for enter login is not present"
 
 
     def enter_right_value(self):
@@ -17,21 +17,21 @@ class LoginPage(BasePage):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "", *LoginPageLocators.NEXT_BUTTON)
         message_element = self.browser.find_element(*LoginPageLocators.MESSAGE_ELEMENT)
         message = message_element.text
-        assert message == 'Enter an email or phone number', 'Message is not present or false'
+        assert message == 'Enter an email or phone number', f'Message is not present or false, current message: {message}'
 
 
     def enter_cyrillic_symbols(self):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "Виктория", *LoginPageLocators.NEXT_BUTTON)
         message_element = self.browser.find_element(*LoginPageLocators.MESSAGE_ELEMENT)
         message = message_element.text
-        assert message == 'Enter a valid email or phone number', 'Message is not present or false'
+        assert message == 'Enter a valid email or phone number', f'Message is not present or false, current message: {message}'
 
 
     def enter_five_symbols(self):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "Vikon", *LoginPageLocators.NEXT_BUTTON)
         message_element = self.browser.find_element(*LoginPageLocators.MESSAGE_ELEMENT)
         message = message_element.text
-        assert message == 'Enter a valid email or phone number', 'Message is not present or false'
+        assert message == 'Enter a valid email or phone number', f'Message is not present or false, current message: {message}'
 
     def enter_six_symbols(self):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "Naumen",
@@ -42,7 +42,7 @@ class LoginPage(BasePage):
                                     *LoginPageLocators.NEXT_BUTTON)
         message_element = self.browser.find_element(*LoginPageLocators.MESSAGE_ELEMENT)
         message = message_element.text
-        assert message == 'Couldn’t find your Google Account', 'Message is not present or false'
+        assert message == 'Couldn’t find your Google Account', f'Message is not present or false, current message: {message}'
 
 
     def enter_thirty_symbols(self):
@@ -55,13 +55,13 @@ class LoginPage(BasePage):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "<h1>", *LoginPageLocators.NEXT_BUTTON)
         message_element = self.browser.find_element(*LoginPageLocators.MESSAGE_ELEMENT)
         message = message_element.text
-        assert message == 'Enter a valid email or phone number', 'Message is not present or false'
+        assert message == 'Enter a valid email or phone number', f'Message is not present or false, current message: {message}'
 
     def enter_email_from_another_mail_service(self):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "umbrella_92_0502@mail.ru", *LoginPageLocators.NEXT_BUTTON)
         message_element = self.browser.find_element(*LoginPageLocators.MESSAGE_ELEMENT)
         message = message_element.text
-        assert message == 'Couldn’t find your Google Account', 'Message is not present or false'
+        assert message == 'Couldn’t find your Google Account', f'Message is not present or false, current message: {message}'
 
 
 
