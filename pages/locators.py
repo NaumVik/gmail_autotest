@@ -20,6 +20,7 @@ class PasswordPageLocators():
 
 class KeyWordsForRightURL():
     LEARN_MORE_PAGE = "answer" #support.google.com/accounts/answer/2917834
-    HELP_PAGE = "support.google.com/accounts"
+    HELP_PAGE = "accounts" #support.google.com/accounts
     PRIVACY_PAGE = "privacy"
     TERMS_PAGE = "terms"
+    FORGOT_EMAIL_PAGE = "usernamerecovery"

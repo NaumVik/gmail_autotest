@@ -1,15 +1,16 @@
 from selenium import webdriver
-
 from .base_page import BasePage
 from .locators import LoginPageLocators, KeyWordsForRightURL
-
+from selenium.webdriver.support.ui import Select
+from random import choice
+from selenium.webdriver.common.by import By
 
 class LoginPage(BasePage):
     def should_be_login_form(self):
         assert self.is_element_present(*LoginPageLocators.INPUT_EMAIL), "Form for enter login is not present"
 
 
-    def enter_right_value(self):
+    def enter_valid_value(self):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "Shemyakin11", *LoginPageLocators.NEXT_BUTTON)
 
 
@@ -64,20 +65,15 @@ class LoginPage(BasePage):
         assert message == 'Couldn’t find your Google Account', f'Message is not present or false, current message: {message}'
 
 
-
-
-
-
-
     def learn_more_button(self):
         self.should_be_learn_more_button()
         self.should_be_learn_more_page()
 
     def should_be_learn_more_button(self):
-        assert self.is_element_present(*LoginPageLocators.LEARN_MORE_BUTTON), "learn more button is not present"
+        assert self.is_element_present(*LoginPageLocators.LEARN_MORE_BUTTON), "learn_more button is not present"
 
     def should_be_learn_more_page(self):
-        assert self.go_to_right_page(*LoginPageLocators.LEARN_MORE_BUTTON, KeyWordsForRightURL.LEARN_MORE_PAGE), "Not learn more page URL"
+        assert self.go_to_right_page_in_new_window(*LoginPageLocators.LEARN_MORE_BUTTON, KeyWordsForRightURL.LEARN_MORE_PAGE), "Not learn more page URL"
 
     def help_button(self):
         self.should_be_help_button()
@@ -87,8 +83,55 @@ class LoginPage(BasePage):
         assert self.is_element_present(*LoginPageLocators.HELP_BUTTON), "Help button is not present"
 
     def should_be_help_page(self):
-        assert self.go_to_right_page(*LoginPageLocators.HELP_BUTTON, KeyWordsForRightURL.HELP_PAGE), "Not Help page URL"
+        assert self.go_to_right_page_in_new_window(*LoginPageLocators.HELP_BUTTON, KeyWordsForRightURL.HELP_PAGE), "Not Help_page URL"
 
-    # def should_be_register_form(self):
-    #     # реализуйте проверку, что есть форма регистрации на странице
-    #     assert True
+    def privacy_button(self):
+        self.should_be_privacy_button()
+        self.should_be_privacy_page()
+
+    def should_be_privacy_button(self):
+        assert self.is_element_present(*LoginPageLocators.PRIVACY_BUTTON), "Privacy button is not present"
+
+    def should_be_privacy_page(self):
+        assert self.go_to_right_page_in_new_window(*LoginPageLocators.PRIVACY_BUTTON,
+                                                   KeyWordsForRightURL.PRIVACY_PAGE), "Not privacy_page URL"
+
+    def terms_button(self):
+        self.should_be_terms_button()
+        self.should_be_terms_page()
+
+    def should_be_terms_button(self):
+        assert self.is_element_present(*LoginPageLocators.TERMS_BUTTON), "Terms button is not present"
+
+    def should_be_terms_page(self):
+        assert self.go_to_right_page_in_new_window(*LoginPageLocators.TERMS_BUTTON,
+                                                   KeyWordsForRightURL.TERMS_PAGE), "Not terms_page URL"
+
+    def forgot_email_button(self):
+        self.should_be_forgot_email_button()
+        self.should_be_forgot_email_page()
+
+    def should_be_forgot_email_button(self):
+        assert self.is_element_present(*LoginPageLocators.FORGOT_EMAIL_BUTTON), "Forgot_email button is not present"
+
+    def should_be_forgot_email_page(self):
+        forgot_email_button = self.browser.find_element(*LoginPageLocators.FORGOT_EMAIL_BUTTON)
+        forgot_email_button.click()
+        assert "usernamerecovery" in self.get_url_of_page(), "Not forgot_email page URL"
+
+    def create_account_button(self):
+        self.should_be_create_account_button()
+        self.should_be_create_account_page()
+
+    def should_be_create_account_button(self):
+        assert self.is_element_present(*LoginPageLocators.CREATE_ACCOUNT_BUTTON), "Create_account button is not present"
+
+    def should_be_create_account_page(self):
+        possible_options = ["For my personal use", "For my child", "For work or my business"]
+        create_account_button = self.browser.find_element(*LoginPageLocators.CREATE_ACCOUNT_BUTTON)
+        create_account_button.click()
+        text = choice(possible_options)
+        go_to_creation_button = self.browser.find_element(By.XPATH, '//span[text()="For my child"]')
+        go_to_creation_button.click()
+        assert "signup" in self.get_url_of_page(), "Not create_account page URL"
+

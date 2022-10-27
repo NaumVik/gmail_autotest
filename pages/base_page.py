@@ -12,7 +12,7 @@ class BasePage():
     def open(self):
         self.browser.get(self.url)
 
-#TODO modify this function to get the right url(compare)
+
     def get_url_of_page(self):
         need_url = self.browser.current_url
         return need_url
@@ -25,16 +25,16 @@ class BasePage():
         return True
 
     def enter_value_and_submit(self, how, what, value, how2, what2):
-        space = self.browser.find_element(how, what)
-        space.send_keys(value)
+        form = self.browser.find_element(how, what)
+        form.send_keys(value)
         submit_button = self.browser.find_element(how2, what2)
         submit_button.click()
 
-#TODO change place to setup in class of test
-    def go_to_right_page(self, how, what, search_word):
+    def go_to_right_page_in_new_window(self, how, what, search_word):
         button = self.browser.find_element(how, what)
         button.click()
-        print(self.get_url_of_page())
+        new_window = self.browser.window_handles[1]
+        self.browser.switch_to.window(new_window)
         if search_word in self.get_url_of_page():
             return True
         else:
