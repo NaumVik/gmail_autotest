@@ -110,3 +110,9 @@ class TestCreateAccountButton():
         page = LoginPage(browser, link)
         page.open()
         page.should_be_create_for_business_account_page()
+
+class TestChangeLanguage():
+    def test_changing_language(self, browser):
+        page = LoginPage(browser, link)
+        page.open()
+        page.could_change_language()

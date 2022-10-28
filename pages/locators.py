@@ -15,6 +15,9 @@ class LoginPageLocators():
     HELP_BUTTON = (By.XPATH, '//a[text()="Help"]')
     PRIVACY_BUTTON = (By.XPATH, '//a[text()="Privacy"]')
     TERMS_BUTTON = (By.XPATH, '//a[text()="Terms"]')
+    LANGUAGE_PAGE_BUTTON = (By.CSS_SELECTOR, 'div[role="combobox"]')
+    LANGUAGE_TO_CHANGE_BUTTON = (By.CSS_SELECTOR, 'li[data-value="be"]')
+    ANOTHER_LANGUAGE_BUTTON = (By.XPATH, '//a[text()="Даведацца больш"]')
 
 
 

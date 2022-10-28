@@ -147,3 +147,19 @@ class LoginPage(BasePage):
         create_account_button.click()
         assert self.go_to_right_page_in_the_same_window(*LoginPageLocators.CREATE_ACCOUNT_FOR_BUSINESS, "webcreateaccount"), \
             "Not create_personal_account page URL"
+
+    def could_change_language(self):
+        self.should_be_change_language_box()
+        self.should_page_in_diff_language()
+
+    def should_be_change_language_box(self):
+        assert self.is_element_present(*LoginPageLocators.LANGUAGE_PAGE_BUTTON), "Language button is not present"
+
+
+#TODO not interaction button language
+    def should_page_in_diff_language(self):
+        language_box = self.browser.find_element(*LoginPageLocators.LANGUAGE_PAGE_BUTTON)
+        language_box.click()
+        another_language = self.browser.find_element(*LoginPageLocators.LANGUAGE_TO_CHANGE_BUTTON)
+        another_language.click()
+        assert self.is_element_present(*LoginPageLocators.ANOTHER_LANGUAGE_BUTTON), "Language is not change"
