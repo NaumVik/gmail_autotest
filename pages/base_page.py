@@ -40,10 +40,13 @@ class BasePage():
         else:
             return False
 
+    def go_to_right_page_in_the_same_window(self, how, what, search_word):
+        button = self.browser.find_element(how, what)
+        button.click()
+        if search_word in self.get_url_of_page():
+            return True
+        else:
+            return False
 
 
 
-
-    # def go_to_another_page(self):
-    #     sign_in_button = self.browser.find_element(*MainPageLocators.LOGIN_LINK)
-    #     sign_in_button.click()

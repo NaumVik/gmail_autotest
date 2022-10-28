@@ -84,7 +84,29 @@ class TestActiveButtons():
         page.open()
         page.forgot_email_button()
 
-    def test_create_account_button(self, browser):
+    # @pytest.mark.create_account
+    # def test_create_account_button(self, browser):
+    #     page = LoginPage(browser, link)
+    #     page.open()
+    #     page.create_account_button()
+
+class TestCreateAccountButton():
+    def test_presence_of_create_account_button(self, browser):
         page = LoginPage(browser, link)
         page.open()
-        page.create_account_button()
+        page.should_be_create_account_button()
+
+    def test_creation_button_for_person(self, browser):
+        page = LoginPage(browser, link)
+        page.open()
+        page.should_be_create_personal_account_page()
+
+    def test_creation_button_for_child(self, browser):
+        page = LoginPage(browser, link)
+        page.open()
+        page.should_be_create_child_account_page()
+
+    def test_creation_button_for_business(self, browser):
+        page = LoginPage(browser, link)
+        page.open()
+        page.should_be_create_for_business_account_page()

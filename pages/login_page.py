@@ -119,19 +119,31 @@ class LoginPage(BasePage):
         forgot_email_button.click()
         assert "usernamerecovery" in self.get_url_of_page(), "Not forgot_email page URL"
 
-    def create_account_button(self):
-        self.should_be_create_account_button()
-        self.should_be_create_account_page()
+    # def create_account_button(self):
+    #     self.should_be_create_account_button()
+    #     self.should_be_create_personal_account_page()
+    #     self.should_be_create_child_account_page()
 
     def should_be_create_account_button(self):
         assert self.is_element_present(*LoginPageLocators.CREATE_ACCOUNT_BUTTON), "Create_account button is not present"
 
-    def should_be_create_account_page(self):
-        possible_options = ["For my personal use", "For my child", "For work or my business"]
+
+    def should_be_create_personal_account_page(self):
         create_account_button = self.browser.find_element(*LoginPageLocators.CREATE_ACCOUNT_BUTTON)
         create_account_button.click()
-        text = choice(possible_options)
-        go_to_creation_button = self.browser.find_element(By.XPATH, '//span[text()="For my child"]')
-        go_to_creation_button.click()
-        assert "signup" in self.get_url_of_page(), "Not create_account page URL"
+        assert self.go_to_right_page_in_the_same_window(*LoginPageLocators.CREATE_ACCOUNT_PERSONAL,"webcreateaccount"), \
+            "Not create_personal_account page URL"
 
+    def should_be_create_child_account_page(self):
+        # sign_in_button = self.browser.find_element(By.XPATH, '//span[text()="Sign in instead"]')
+        # sign_in_button.click()
+        create_account_button = self.browser.find_element(*LoginPageLocators.CREATE_ACCOUNT_BUTTON)
+        create_account_button.click()
+        assert self.go_to_right_page_in_the_same_window(*LoginPageLocators.CREATE_ACCOUNT_FOR_CHILD,"kidaccountinfo"), \
+            "Not create_child_account page URL"
+
+    def should_be_create_for_business_account_page(self):
+        create_account_button = self.browser.find_element(*LoginPageLocators.CREATE_ACCOUNT_BUTTON)
+        create_account_button.click()
+        assert self.go_to_right_page_in_the_same_window(*LoginPageLocators.CREATE_ACCOUNT_FOR_BUSINESS, "webcreateaccount"), \
+            "Not create_personal_account page URL"
