@@ -8,7 +8,7 @@ from selenium.webdriver.chrome.options import Options
 def browser():
     options = webdriver.ChromeOptions()
     # options.add_experimental_option('prefs', {'intl.accept_languages': 'en,en_UK'})
-    options.add_argument('--lang=en_US')
+    options.add_argument('--lang=en-US')
     browser = webdriver.Chrome(chrome_options=options)
     yield browser
     # print("\nquit browser..")
