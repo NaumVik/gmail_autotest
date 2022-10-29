@@ -40,7 +40,7 @@ class PasswordPage(BasePage):
         self.should_go_to_login_page()
 
     def should_be_change_account_button(self):
-        assert self.is_element_present(*PasswordPageLocators.ACCOUNT_NAME)
+        assert self.is_element_present(*PasswordPageLocators.ACCOUNT_NAME),'Change_account button is not present'
 
     def should_go_to_login_page(self):
         assert self.go_to_right_page_in_the_same_window(*PasswordPageLocators.ACCOUNT_NAME, "identifier"), "Not login_page URL"
@@ -50,7 +50,7 @@ class PasswordPage(BasePage):
         self.password_can_be_shown()
 
     def should_be_show_password_button(self):
-        assert self.is_element_present(*PasswordPageLocators.SHOW_PASSWORD)
+        assert self.is_element_present(*PasswordPageLocators.SHOW_PASSWORD), "Show_password button is not present"
 
     def password_can_be_shown(self):
         password_form = self.browser.find_element(*PasswordPageLocators.INPUT_PASSWORD)
@@ -64,7 +64,7 @@ class PasswordPage(BasePage):
         self.should_be_forgot_password_url()
 
     def should_be_forgot_password_button(self):
-        assert self.is_element_present(*PasswordPageLocators.FORGOT_PASSWORD)
+        assert self.is_element_present(*PasswordPageLocators.FORGOT_PASSWORD), "Forgot_password button is not present"
 
     def should_be_forgot_password_url(self):
         forgot_password_button = self.browser.find_element(*PasswordPageLocators.FORGOT_PASSWORD)
