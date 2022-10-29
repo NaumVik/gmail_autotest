@@ -49,4 +49,11 @@ class BasePage():
             return False
 
 
+    def read_the_message(self, how, what):
+        try:
+            message_element = self.browser.find_element(how, what)
+            message = message_element.text
+        except NoSuchElementException:
+            return False
+        return message
 

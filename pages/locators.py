@@ -22,7 +22,12 @@ class LoginPageLocators():
 
 
 class PasswordPageLocators():
-    pass
+    ACCOUNT_NAME = (By.CSS_SELECTOR, 'div[class="KTeGk"]')
+    INPUT_PASSWORD = (By.CSS_SELECTOR, 'input[type="password"]')
+    SHOW_PASSWORD = (By.XPATH, '//span[text()="Show password"]')
+    FORGOT_PASSWORD = (By.XPATH, '//span[text()="Forgot password?"]')
+    NEXT_BUTTON = (By.XPATH, '//span[text()="Next"]')
+    MESSAGE_ELEMENT = (By.CSS_SELECTOR, 'div[jsname="B34EJ"] > span')
 
 
 class KeyWordsForRightURL():

@@ -1,6 +1,7 @@
 from selenium import webdriver
 from .base_page import BasePage
 from .locators import LoginPageLocators, KeyWordsForRightURL
+from .password_page import PasswordPage
 from selenium.webdriver.support.ui import Select
 from random import choice
 from selenium.webdriver.common.by import By
@@ -12,57 +13,53 @@ class LoginPage(BasePage):
 
     def enter_valid_value(self):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "Shemyakin11", *LoginPageLocators.NEXT_BUTTON)
+        message = self.read_the_message(*LoginPageLocators.MESSAGE_ELEMENT)
+        assert "pwd" in self.get_url_of_page() and message is False, f'Not valid value, current message:{message}'
 
 
     def leave_empty_form(self):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "", *LoginPageLocators.NEXT_BUTTON)
-        message_element = self.browser.find_element(*LoginPageLocators.MESSAGE_ELEMENT)
-        message = message_element.text
-        assert message == 'Enter an email or phone number', f'Message is not present or false, current message: {message}'
+        message = self.read_the_message(*LoginPageLocators.MESSAGE_ELEMENT)
+        assert message == 'Enter an email or phone number', f'Should be message: "Enter an email or phone number", current message: {message}'
 
 
     def enter_cyrillic_symbols(self):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "Виктория", *LoginPageLocators.NEXT_BUTTON)
-        message_element = self.browser.find_element(*LoginPageLocators.MESSAGE_ELEMENT)
-        message = message_element.text
-        assert message == 'Enter a valid email or phone number', f'Message is not present or false, current message: {message}'
-
+        message = self.read_the_message(*LoginPageLocators.MESSAGE_ELEMENT)
+        assert message == 'Enter a valid email or phone number', f'Should be message: "Enter a valid email or phone number", current message: {message}'
 
     def enter_five_symbols(self):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "Vikon", *LoginPageLocators.NEXT_BUTTON)
-        message_element = self.browser.find_element(*LoginPageLocators.MESSAGE_ELEMENT)
-        message = message_element.text
-        assert message == 'Enter a valid email or phone number', f'Message is not present or false, current message: {message}'
+        message = self.read_the_message(*LoginPageLocators.MESSAGE_ELEMENT)
+        assert message == 'Enter a valid email or phone number', f'Should be message: "Enter a valid email or phone number", current message: {message}'
 
     def enter_six_symbols(self):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "Naumen",
                                     *LoginPageLocators.NEXT_BUTTON)
-        #go to password page
+        message = self.read_the_message(*LoginPageLocators.MESSAGE_ELEMENT)
+        assert "pwd" in self.get_url_of_page() or message == 'Couldn’t find your Google Account', f'Not valid value, current message: {message}'
+
     def enter_twenty_nine_symbols(self):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "Testinggoggleservicesisveryfun",
                                     *LoginPageLocators.NEXT_BUTTON)
-        message_element = self.browser.find_element(*LoginPageLocators.MESSAGE_ELEMENT)
-        message = message_element.text
-        assert message == 'Couldn’t find your Google Account', f'Message is not present or false, current message: {message}'
+        message = self.read_the_message(*LoginPageLocators.MESSAGE_ELEMENT)
+        assert "pwd" in self.get_url_of_page() or message == 'Couldn’t find your Google Account', f'Should be message: "Couldn’t find your Google Account", current message: {message}'
 
 
     def enter_thirty_symbols(self):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "Testinggoggleservicesisveryhard", *LoginPageLocators.NEXT_BUTTON)
-        message_element = self.browser.find_element(*LoginPageLocators.MESSAGE_ELEMENT)
-        message = message_element.text
-        assert message == 'Enter a valid email or phone number', f'Message is not present or false, current message: {message}'
+        message = self.read_the_message(*LoginPageLocators.MESSAGE_ELEMENT)
+        assert message == 'Enter a valid email or phone number', f'Should be message: "Enter a valid email or phone number", current message: {message}'
 
     def enter_html_tag(self):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "<h1>", *LoginPageLocators.NEXT_BUTTON)
-        message_element = self.browser.find_element(*LoginPageLocators.MESSAGE_ELEMENT)
-        message = message_element.text
-        assert message == 'Enter a valid email or phone number', f'Message is not present or false, current message: {message}'
+        message = self.read_the_message(*LoginPageLocators.MESSAGE_ELEMENT)
+        assert message == 'Enter a valid email or phone number', f'Should be message: "Enter a valid email or phone number", current message: {message}'
 
     def enter_email_from_another_mail_service(self):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "umbrella_92_0502@mail.ru", *LoginPageLocators.NEXT_BUTTON)
-        message_element = self.browser.find_element(*LoginPageLocators.MESSAGE_ELEMENT)
-        message = message_element.text
-        assert message == 'Couldn’t find your Google Account', f'Message is not present or false, current message: {message}'
+        message = self.read_the_message(*LoginPageLocators.MESSAGE_ELEMENT)
+        assert message == 'Couldn’t find your Google Account', f'Should be message: "Couldn’t find your Google Account", current message: {message}'
 
 
     def learn_more_button(self):
@@ -156,10 +153,15 @@ class LoginPage(BasePage):
         assert self.is_element_present(*LoginPageLocators.LANGUAGE_PAGE_BUTTON), "Language button is not present"
 
 
-#TODO not interaction button language
+
     def should_page_in_diff_language(self):
         language_box = self.browser.find_element(*LoginPageLocators.LANGUAGE_PAGE_BUTTON)
         language_box.click()
         another_language = self.browser.find_element(*LoginPageLocators.LANGUAGE_TO_CHANGE_BUTTON)
         another_language.click()
         assert self.is_element_present(*LoginPageLocators.ANOTHER_LANGUAGE_BUTTON), "Language is not change"
+
+    def go_to_password_page(self):
+        self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "Shemyakin11", *LoginPageLocators.NEXT_BUTTON)
+        return PasswordPage(browser=self.browser, url=self.browser.current_url, timeout=10)
+
