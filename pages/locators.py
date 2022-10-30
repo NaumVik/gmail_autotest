@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
-#TODO find all locators
-class LoginPageLocators():
+
+class LoginPageLocators:
     FRAME_LOGIN = (By.CSS_SELECTOR, 'form[method="post"]')
     INPUT_EMAIL = (By.CSS_SELECTOR, 'input[type="email"]')
     MESSAGE_ELEMENT = (By.CSS_SELECTOR, 'div[class="o6cuMc"]')
@@ -20,8 +20,7 @@ class LoginPageLocators():
     ANOTHER_LANGUAGE_BUTTON = (By.XPATH, '//a[text()="Даведацца больш"]')
 
 
-
-class PasswordPageLocators():
+class PasswordPageLocators:
     ACCOUNT_NAME = (By.CSS_SELECTOR, 'div[class="KTeGk"]')
     INPUT_PASSWORD = (By.CSS_SELECTOR, 'input[type="password"]')
     SHOW_PASSWORD = (By.XPATH, '//span[text()="Show password"]')
@@ -30,9 +29,13 @@ class PasswordPageLocators():
     MESSAGE_ELEMENT = (By.CSS_SELECTOR, 'div[jsname="B34EJ"] > span')
 
 
-class KeyWordsForRightURL():
-    LEARN_MORE_PAGE = "answer" #support.google.com/accounts/answer/2917834
-    HELP_PAGE = "accounts" #support.google.com/accounts
+class KeyWordsForRightURL:
+    LEARN_MORE_PAGE = "answer"
+    HELP_PAGE = "accounts"
     PRIVACY_PAGE = "privacy"
     TERMS_PAGE = "terms"
     FORGOT_EMAIL_PAGE = "usernamerecovery"
+    PASSWORD_PAGE = 'pwd'
+    CREATE_PERSONAL_ACCOUNT_PAGE = "webcreateaccount"
+    CREATE_CHILD_ACCOUNT_PAGE = "kidaccountinfo"
+    CREATE_BUSINESS_ACCOUNT_PAGE = "webcreateaccount"
