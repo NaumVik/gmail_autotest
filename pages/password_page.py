@@ -7,28 +7,22 @@ class PasswordPage(BasePage):
         assert self.is_element_present(*PasswordPageLocators.INPUT_PASSWORD), 'Password form is not present'
 
     def leave_empty_form(self):
-        self.enter_value_and_submit(*PasswordPageLocators.INPUT_PASSWORD, "", *PasswordPageLocators.NEXT_BUTTON)
-        message = self.read_the_message(*PasswordPageLocators.MESSAGE_ELEMENT)
-        assert message == 'Enter a password', f'Should be message: "Enter a password", current message: {message}'
+        self.__enter_value_and_submit("", 'Enter a password', 'Should be message: "Enter a password", current message: ')
 
     def enter_cyrillic_symbols(self):
-        self.enter_value_and_submit(*PasswordPageLocators.INPUT_PASSWORD, "Виктория12345",
-                                    *PasswordPageLocators.NEXT_BUTTON)
-        message = self.read_the_message(*PasswordPageLocators.MESSAGE_ELEMENT)
-        assert message == 'Wrong password. Try again or click Forgot password to reset it.', \
-            f'Should be message: "Wrong password. Try again or click Forgot password to reset it.", current message: {message}'
+        self.__enter_value_and_submit("Виктория12345", 'Wrong password. Try again or click Forgot password to reset it.', 'Should be message: "Wrong password. Try again or click Forgot password to reset it.", current message: ')
 
     def enter_seven_symbols(self):
-        self.enter_value_and_submit(*PasswordPageLocators.INPUT_PASSWORD, "1234567", *PasswordPageLocators.NEXT_BUTTON)
-        message = self.read_the_message(*PasswordPageLocators.MESSAGE_ELEMENT)
-        assert message == 'Wrong password. Try again or click Forgot password to reset it.', \
-            f'Should be message: "Wrong password. Try again or click Forgot password to reset it., current message: {message}'
+        self.__enter_value_and_submit("1234567", 'Wrong password. Try again or click Forgot password to reset it.', 'Should be message: "Wrong password. Try again or click Forgot password to reset it., current message: ')
 
     def enter_eight_symbols(self):
-        self.enter_value_and_submit(*PasswordPageLocators.INPUT_PASSWORD, "09876543", *PasswordPageLocators.NEXT_BUTTON)
+        self.__enter_value_and_submit("09876543", 'Wrong password. Try again or click Forgot password to reset it.', 'Should be message: "Wrong password. Try again or click Forgot password to reset it., current message: ')
+
+    def __enter_value_and_submit(self, symbols, wrong_pass, should_be):
+        self.enter_value_and_submit(*PasswordPageLocators.INPUT_PASSWORD, symbols, *PasswordPageLocators.NEXT_BUTTON)
+
         message = self.read_the_message(*PasswordPageLocators.MESSAGE_ELEMENT)
-        assert message == 'Wrong password. Try again or click Forgot password to reset it.', \
-            f'Should be message: "Wrong password. Try again or click Forgot password to reset it., current message: {message}'
+        assert message == wrong_pass, f'{should_be}{message}'
 
     def could_change_account(self):
         self.should_be_change_account_button()

@@ -17,22 +17,13 @@ class LoginPage(BasePage):
             f'Not password_page URL, current message:{message}'
 
     def leave_empty_form(self):
-        self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "", *LoginPageLocators.NEXT_BUTTON)
-        message = self.read_the_message(*LoginPageLocators.MESSAGE_ELEMENT)
-        assert message == 'Enter an email or phone number', \
-            f'Should be message: "Enter an email or phone number", current message: {message}'
+        self.__enter_value_and_submit("", 'Enter an email or phone number', 'Should be message: "Enter an email or phone number", current message: ')
 
     def enter_cyrillic_symbols(self):
-        self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "Виктория", *LoginPageLocators.NEXT_BUTTON)
-        message = self.read_the_message(*LoginPageLocators.MESSAGE_ELEMENT)
-        assert message == 'Enter a valid email or phone number', \
-            f'Should be message: "Enter a valid email or phone number", current message: {message}'
+        self.__enter_value_and_submit("Виктория", 'Enter a valid email or phone number', 'Should be message: "Enter a valid email or phone number", current message: ')
 
     def enter_five_symbols(self):
-        self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "Vikon", *LoginPageLocators.NEXT_BUTTON)
-        message = self.read_the_message(*LoginPageLocators.MESSAGE_ELEMENT)
-        assert message == 'Enter a valid email or phone number', \
-            f'Should be message: "Enter a valid email or phone number", current message: {message}'
+        self.__enter_value_and_submit("Vikon", 'Enter a valid email or phone number', 'Should be message: "Enter a valid email or phone number", current message: ')
 
     def enter_six_symbols(self):
         self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "Naumen",
@@ -49,24 +40,19 @@ class LoginPage(BasePage):
             f'Should be message: "Couldn’t find your Google Account", current message: {message}'
 
     def enter_thirty_symbols(self):
-        self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "Testinggoggleservicesisveryhard",
-                                    *LoginPageLocators.NEXT_BUTTON)
-        message = self.read_the_message(*LoginPageLocators.MESSAGE_ELEMENT)
-        assert message == 'Enter a valid email or phone number', \
-            f'Should be message: "Enter a valid email or phone number", current message: {message}'
+        self.__enter_value_and_submit("Testinggoggleservicesisveryhard", 'Enter a valid email or phone number', 'Should be message: "Enter a valid email or phone number", current message: ')
 
     def enter_html_tag(self):
-        self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "<h1>", *LoginPageLocators.NEXT_BUTTON)
-        message = self.read_the_message(*LoginPageLocators.MESSAGE_ELEMENT)
-        assert message == 'Enter a valid email or phone number', \
-            f'Should be message: "Enter a valid email or phone number", current message: {message}'
+        self.__enter_value_and_submit("<h1>", 'Enter a valid email or phone number', 'Should be message: "Enter a valid email or phone number", current message: ')
 
     def enter_email_from_another_mail_service(self):
-        self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, "umbrella_92_0502@mail.ru",
-                                    *LoginPageLocators.NEXT_BUTTON)
+        self.__enter_value_and_submit("umbrella_92_0502@mail.ru", 'Couldn’t find your Google Account', 'Should be message: "Couldn’t find your Google Account", current message: ')
+
+    def __enter_value_and_submit(self, symbols, wrong_pass, should_be):
+        self.enter_value_and_submit(*LoginPageLocators.INPUT_EMAIL, symbols, *LoginPageLocators.NEXT_BUTTON)
+
         message = self.read_the_message(*LoginPageLocators.MESSAGE_ELEMENT)
-        assert message == 'Couldn’t find your Google Account', \
-            f'Should be message: "Couldn’t find your Google Account", current message: {message}'
+        assert message == wrong_pass, f'{should_be}{message}'
 
     def learn_more_button(self):
         self.should_be_learn_more_button()

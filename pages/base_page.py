@@ -13,8 +13,7 @@ class BasePage:
         self.browser.get(self.url)
 
     def get_url_of_page(self):
-        need_url = self.browser.current_url
-        return need_url
+        return self.browser.current_url
 
     def is_element_present(self, how, what):
         try:
@@ -35,25 +34,19 @@ class BasePage:
         WebDriverWait(self.browser, 5).until(EC.new_window_is_opened([1]))
         new_window = self.browser.window_handles[1]
         self.browser.switch_to.window(new_window)
-        if search_word in self.get_url_of_page():
-            return True
-        else:
-            return False
+        return search_word in self.get_url_of_page()
 
     def go_to_right_page_in_the_same_window(self, how, what, search_word):
         button = self.browser.find_element(how, what)
         self.browser.execute_script("return arguments[0].scrollIntoView(true);", button)
         button.click()
-        if search_word in self.get_url_of_page():
-            return True
-        else:
-            return False
+        return search_word in self.get_url_of_page()
 
     def read_the_message(self, how, what):
         try:
             WebDriverWait(self.browser, 5).until(EC.visibility_of_element_located((how, what)))
             message_element = self.browser.find_element(how, what)
             message = message_element.text
-        except NoSuchElementException and TimeoutException:
+        except (NoSuchElementException, TimeoutException):
             return False
         return message
